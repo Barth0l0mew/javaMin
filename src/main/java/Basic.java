@@ -1,6 +1,5 @@
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
-import io.javalin.http.util.JsonEscapeUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,9 +8,9 @@ import java.util.Set;
 
 public class Basic {
     public static void main(String[] args) {
-       // hello();
-       // getStaticPage();
-        createPerson();
+        //hello();
+        getStaticPage();
+        //createPerson();
     }
     static  void hello (){
         System.out.println("Hello world");
@@ -38,7 +37,7 @@ public class Basic {
                     ctx.status(202);//назначения статуса кода
                 })
                 //вывод в json
-                .get("/json/{name}",ctx->ctx.json(new Person(ctx.pathParam("name"))))
+                .get("/json/{name}",ctx->ctx.json(new Person_1(ctx.pathParam("name"))))
                 .get ("/sum",ctx->{
                     //http://127.0.0.1/sum?a=2&b=3
                     int a= Integer.parseInt(ctx.queryParam("a"));
@@ -68,7 +67,7 @@ http://localhost:7070/person
             body: JSON.stringify({"name": "Ivan", "surname": "Ivanov"})
           });
          */
-        Set<Person> persons = new HashSet<>();
+        Set<Person_1> persons = new HashSet<>();
         var app = Javalin.create(config-> {
                     config.addStaticFiles("src/main/resources", Location.EXTERNAL);
                     config.enableCorsForAllOrigins();// разрешение запросов с других источников
@@ -76,7 +75,7 @@ http://localhost:7070/person
                 })
                 .post ("/person", ctx->{
                     //передача только через форму  на странице html или через консоль
-                    persons.add(ctx.bodyAsClass(Person.class));
+                    persons.add(ctx.bodyAsClass(Person_1.class));
                     ctx.status(201);
 
                 } )
@@ -85,18 +84,18 @@ http://localhost:7070/person
 
 }
 
-class   Person {
+class Person_1 {
     private String name;
     private String surName;
 
-    public Person(){
+    public Person_1(){
 
     }
-    public Person(String name) {
+    public Person_1(String name) {
         this.name = name;
     }
 
-    public Person(String name, String surName) {
+    public Person_1(String name, String surName) {
         this.name = name;
         this.surName = surName;
     }

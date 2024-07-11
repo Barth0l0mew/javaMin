@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  Persons:
+  <ul id="persons"></ul>
+  <script>
+    persons = {};
+    async function get() {
+      let persons = await fetch('http://localhost:7070/api/persons')
+          .then(response => {
+            //handle response            
+            console.log(response);
+          })
+          .then(data => {
+            //handle data
+            console.log(data);
+          })
+          .catch(error => {
+            //handle error
+          });
+      console.log(persons);
+
+      let ul = $("#persons");
+      persons.forEach(function (person) {
+        let li = $("li");
+        li.html(`{
+person.id
+} {
+person.name
+} {person.surname}`);
+        ul.append(li);
+      });
+    }
+    get();
+  </script>
+</body>
+
+</html>
